@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioCool Consultancy</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #d1fae5, #a7f3d0);
+        color: #064e3b;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        text-align: center;
+        padding: 50px 20px 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .container {
+        flex: 1;
+        max-width: 700px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin: 20px 0 8px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 1rem;
+      }
+
+      button {
+        margin-top: 24px;
+        background-color: #047857;
+        color: white;
+        border: none;
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-radius: 1rem;
+        cursor: pointer;
+      }
+
+      .result {
+        margin-top: 40px;
+        font-size: 1.1rem;
+        color: #065f46;
+        line-height: 1.6;
+        white-space: pre-line;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9rem;
+        color: #065f46;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>BioCool Consultancy</h1>
+      <p>
+        Get an in-depth recommendation based on your location or temperature
+        conditions.
+      </p>
+    </header>
+
+    <div class="container">
+      <label for="city">Enter your city:</label>
+      <input type="text" id="city" placeholder="e.g., Bangalore" />
+
+      <label for="temperature">Or enter your local temperature (°C):</label>
+      <input type="number" id="temperature" placeholder="e.g., 35" />
+
+      <button onclick="getRecommendation()">Get Recommendation</button>
+
+      <div class="result" id="recommendation"></div>
+    </div>
+
+    <footer>
+      &copy; <span id="year"></span> BioCool. All rights reserved.
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      function getRecommendation() {
+        const city = document.getElementById("city").value.trim();
+        const temp = parseFloat(document.getElementById("temperature").value);
+        const result = document.getElementById("recommendation");
+
+        let output = "";
+
+        if (city) {
+          output = `Based on our environmental data for ${city}, we estimate an average daytime temperature exceeding 30°C during peak months.
+
+To effectively manage indoor comfort in such climates, we recommend installing a minimum of 4 BioCool panels for an average living room (around 20 square meters). For outdoor or greenhouse applications, up to 6 panels can significantly reduce heat accumulation and enhance ventilation.
+
+BioCool panels perform best in dry to moderately humid environments. ${city} generally presents favorable conditions, allowing passive cooling through our hydrogel-based material, which absorbs ambient heat and releases it gradually through evaporative principles.
+
+By choosing BioCool, you're not just staying cool—you’re also eliminating reliance on electric air conditioning, reducing your carbon emissions, and creating a more sustainable lifestyle tailored to your region.`;
+        } else if (!isNaN(temp)) {
+          if (temp >= 35) {
+            output = `With temperatures around ${temp}°C, you’re facing high thermal stress conditions.
+
+For effective passive cooling, we suggest using at least 5 BioCool panels for each medium-sized indoor space. The high ambient temperature enhances the hydrogel's heat absorption capacity, making BioCool especially effective in your environment.
+
+This setup will help maintain comfortable room conditions while avoiding electricity use. Additionally, combining BioCool panels with shaded or cross-ventilated spaces amplifies their impact.`;
+          } else if (temp >= 25) {
+            output = `At ${temp}°C, you’re in a moderately warm zone—ideal for BioCool’s passive cooling performance.
+
+We recommend 2 to 3 panels per room for noticeable relief. Our hydrogel matrix activates best above 25°C, offering a gradual cooling experience perfect for homes, small offices, and eco-conscious setups.`;
+          } else {
+            output = `At ${temp}°C, the weather is relatively mild.
+
+In such climates, you may only need 1 or 2 BioCool panels per space to maintain comfort, especially in sun-exposed areas or greenhouses. Even at lower temps, BioCool still helps reduce heat buildup passively.`;
+          }
+        } else {
+          output =
+            "Please enter a valid city or temperature to get recommendations.";
+        }
+
+        result.textContent = output;
+      }
+    </script>
+  </body>
+</html>

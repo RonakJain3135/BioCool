@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Savings Calculator - BioCool</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to bottom right, #d1fae5, #a7f3d0);
+        color: #064e3b;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      p.description {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 30px;
+        text-align: justify;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 0.5rem;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+      }
+
+      button {
+        margin-top: 20px;
+        background-color: #047857;
+        color: white;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      a.back {
+        display: block;
+        margin-top: 30px;
+        text-align: center;
+        color: #047857;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Savings Calculator</h1>
+
+      <p class="description">
+        In a recent environmental cost-saving study conducted across 4 major
+        Indian cities, households using air conditioning for more than 6 hours
+        per day were found to spend between ₹2,000 to ₹3,500 per month solely on
+        cooling. BioCool panels offer an electricity-free alternative that
+        passively cools indoor environments by up to 5°C, reducing the need for
+        air conditioners during mild and moderate summer months. Based on
+        average power consumption of 1.5 tons AC units and current energy
+        tariffs, our model estimates that users can save up to 90 units of
+        electricity per month per room. This not only leads to significant cost
+        savings but also reduces up to 80 kg of CO₂ emissions monthly. Use the
+        calculator below to estimate how much you could save by switching to
+        BioCool panels in your own home or office.
+      </p>
+
+      <label for="acHours">AC Usage per Day (in hours):</label>
+      <input type="number" id="acHours" placeholder="e.g. 6" />
+
+      <label for="rate">Electricity Cost per Unit (₹/kWh):</label>
+      <input type="number" id="rate" placeholder="e.g. 8" />
+
+      <button onclick="calculate()">Calculate Savings</button>
+
+      <div id="result"></div>
+
+      <a href="index.html" class="back">← Back to Home</a>
+    </div>
+
+    <script>
+      function calculate() {
+        const hours = parseFloat(document.getElementById("acHours").value);
+        const rate = parseFloat(document.getElementById("rate").value);
+        const result = document.getElementById("result");
+
+        if (!isNaN(hours) && !isNaN(rate) && hours > 0 && rate > 0) {
+          const acPower = 1.5;
+          const days = 30;
+          const unitsSaved = hours * acPower * days;
+          const moneySaved = unitsSaved * rate;
+          const co2Saved = unitsSaved * 0.9;
+
+          result.innerHTML = `
+            <p>You could save <strong>₹${moneySaved.toFixed(
+              2
+            )}</strong> per month
+            and reduce your carbon emissions by approximately
+            <strong>${co2Saved.toFixed(1)} kg</strong> of CO₂.</p>
+            <p>This is equivalent to planting <strong>${(co2Saved / 21).toFixed(
+              1
+            )}</strong> trees every month!</p>
+          `;
+        } else {
+          result.textContent = "Please enter valid numbers for both fields.";
+        }
+      }
+    </script>
+  </body>
+</html>
